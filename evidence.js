@@ -98,6 +98,26 @@ function getFilteredEvidence() {
     if (matches) results.push(item);
   }
 
+    var sortValue = document.getElementById("sortEvidence").value;
+
+  if (sortValue === "title-asc") {
+    results.sort(function (a, b) {
+      return a.title.localeCompare(b.title);
+    });
+  } else if (sortValue === "title-desc") {
+    results.sort(function (a, b) {
+      return b.title.localeCompare(a.title);
+    });
+  } else if (sortValue === "date-asc") {
+    results.sort(function (a, b) {
+      return new Date(a.timestamp) - new Date(b.timestamp);
+    });
+  } else {
+    results.sort(function (a, b) {
+      return new Date(b.timestamp) - new Date(a.timestamp);
+    });
+  }
+
   filteredEvidence = results;
   return results;
 }
@@ -191,25 +211,6 @@ export function applyStoredBookmarkFlags() {
 }
 
 function handleSortChange() {
-  var sortValue = document.getElementById("sortEvidence").value;
-
-  if (sortValue === "title-asc") {
-    filteredEvidence.sort(function (a, b) {
-      return a.title.localeCompare(b.title);
-    });
-  } else if (sortValue === "title-desc") {
-    filteredEvidence.sort(function (a, b) {
-      return b.title.localeCompare(a.title);
-    });
-  } else if (sortValue === "date-asc") {
-    filteredEvidence.sort(function (a, b) {
-      return new Date(a.timestamp) - new Date(b.timestamp);
-    });
-  } else {
-    filteredEvidence.sort(function (a, b) {
-      return new Date(b.timestamp) - new Date(a.timestamp);
-    });
-  }
   renderEvidenceList();
 }
 
