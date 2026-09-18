@@ -51,3 +51,34 @@ The Evidence view remained in the loading state even after the evidence data had
 ### Verification
 Confirmed that the Evidence list now renders after the fetch completes and that navigating away and back still works.
 
+Demo 4 — Fix silent navigation console error
+
+Change
+
+Changed the navigation button loop counter from var to let.
+
+Before:
+
+for (var i = 0; i < navButtons.length; i++) {
+  navButtons[i].addEventListener("click", function () {
+    var targetView = navButtons[i].getAttribute("data-view");
+    console.log("nav clicked:", targetView);
+  });
+}
+
+After:
+
+for (let i = 0; i < navButtons.length; i++) {
+  navButtons[i].addEventListener("click", function () {
+    var targetView = navButtons[i].getAttribute("data-view");
+    console.log("nav clicked:", targetView);
+  });
+}
+
+Reason
+
+The click callbacks all shared the same function-scoped var i. By the time a navigation button was clicked, the loop had already finished and i was equal to navButtons.length. Therefore navButtons[i] was undefined, which caused a console-only TypeError when .getAttribute() was called.
+
+Verification
+
+Opened DevTools Console, reloaded the application, clicked through all navigation buttons, and confirmed that the previous Cannot read properties of undefined (reading 'getAttribute') error no longer appears.
