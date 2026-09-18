@@ -37,6 +37,10 @@ export function setFilteredEvidence(value) {
   filteredEvidence = value;
 }
 
+export function setEvidenceViewLoading(value) {
+  evidenceViewLoading = value;
+}
+
 export function populateEvidenceDropdowns() {
   var typeSelect = document.getElementById("filterType");
   var personSelect = document.getElementById("filterPerson");

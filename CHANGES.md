@@ -35,3 +35,19 @@ These were presentation/UI changes only and were kept separate from the debuggin
 - Checked that navigation and the existing views still render as before.
 - No known application-logic bugs were intentionally fixed as part of these changes.
 
+## Demo 3 — Fix evidence loading state
+
+### Change
+Added an explicit setter for the Evidence loading state and update it after `evidence.json` has been loaded successfully.
+
+### Code changes
+- Added `setEvidenceViewLoading(value)` to `evidence.js`.
+- Imported the setter into the data-loading module.
+- Set `evidenceViewLoading` to `false` after `setAllEvidence(data)` in the successful Promise callback.
+
+### Reason
+The Evidence view remained in the loading state even after the evidence data had loaded.
+
+### Verification
+Confirmed that the Evidence list now renders after the fetch completes and that navigating away and back still works.
+

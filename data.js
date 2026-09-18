@@ -6,6 +6,10 @@ import {
   setCaseData
 } from "./state.js";
 
+import { 
+  setEvidenceViewLoading 
+} from "./evidence.js";
+
 export function loadCorePeopleAndLocations() {
   return fetch("data/case.json").then(function (caseRes) {
     return caseRes.json().then(function (caseJson) {
@@ -34,6 +38,7 @@ export function loadEvidenceData() {
     })
     .then(function (data) {
       setAllEvidence(data);
+      setEvidenceViewLoading(false);
       return data;
     });
 }
