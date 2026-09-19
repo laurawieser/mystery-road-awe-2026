@@ -154,7 +154,7 @@ function handleHashChange() {
     }
   }
 
-  if (hash === "dashboard" && !viewRendered.dashboard) {
+  if (hash === "dashboard") {
     renderDashboard();
     viewRendered.dashboard = true;
   } else if (hash === "evidence" && !viewRendered.evidence) {

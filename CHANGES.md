@@ -51,7 +51,7 @@ The Evidence view remained in the loading state even after the evidence data had
 ### Verification
 Confirmed that the Evidence list now renders after the fetch completes and that navigating away and back still works.
 
-Demo 4 — Fix silent navigation console error
+### Demo 4 — Fix silent navigation console error
 
 Change
 
@@ -82,3 +82,32 @@ The click callbacks all shared the same function-scoped var i. By the time a nav
 Verification
 
 Opened DevTools Console, reloaded the application, clicked through all navigation buttons, and confirmed that the previous Cannot read properties of undefined (reading 'getAttribute') error no longer appears.
+
+### Demo 5
+
+### Bug 1
+### Change
+Moved the sorting logic into `getFilteredEvidence()` and applied it to the filtered `results` array before rendering.
+
+### Reason
+The previous implementation sorted `filteredEvidence`, but `renderEvidenceList()` immediately rebuilt that array, so the selected sort order was lost.
+
+
+### Bug 2
+
+### Change
+Changed the Dashboard routing condition so that `renderDashboard()` runs every time the Dashboard is opened.
+
+Before:
+
+```js
+if (hash === "dashboard" && !viewRendered.dashboard) {
+  renderDashboard();
+  viewRendered.dashboard = true;
+}
+
+After: 
+if (hash === "dashboard") {
+  renderDashboard();
+  viewRendered.dashboard = true;
+}
