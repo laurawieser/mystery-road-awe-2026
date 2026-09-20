@@ -159,17 +159,17 @@ same filter twice. Keep going past Demos 2–4 — this app does not have only t
 
 **Tasks**
 
-- [ ] For every bug you find (beyond the three already covered), write down: reproduction steps,
+- [x] For every bug you find (beyond the three already covered), write down: reproduction steps,
       expected vs. actual behavior, root cause, the fix, and how you verified it.
-- [ ] Pick one bug from your full list (any of them, including Demos 2–4) and prepare to show it
+- [x] Pick one bug from your full list (any of them, including Demos 2–4) and prepare to show it
       live: the broken behavior, then your fix. **Commit the pre-fix state (or note its commit
       hash) so you can diff broken vs. fixed on demand in class.**
 
 **Questions** (depend on the tasks above)
 
-- [ ] For the bug you chose to present: walk through the exact user actions and system state that
+- [x] For the bug you chose to present: walk through the exact user actions and system state that
       trigger it, live, starting from the pre-fix commit.
-- [ ] Across all the bugs you found, did fixing one ever change the symptoms of, reveal, or
+- [x] Across all the bugs you found, did fixing one ever change the symptoms of, reveal, or
       accidentally fix another? If so, explain the relationship. If not, how did you confirm your
       fixes were properly isolated from each other?
 

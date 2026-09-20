@@ -117,8 +117,31 @@ function certaintyBadgeClass(certainty) {
   return "unreviewed";
 }
 
+function handleQuickViewClick(e) {
+  var modal = document.getElementById("quickViewModal");
+
+  if (
+    e.target.classList.contains("modal-close-btn") ||
+    e.target.classList.contains("modal-backdrop")
+  ) {
+    modal.innerHTML = "";
+    return;
+  }
+
+  if (e.target.getAttribute && e.target.getAttribute("data-open-full")) {
+    var evidenceId = e.target.getAttribute("data-open-full");
+
+    modal.innerHTML = "";
+    navigateTo("evidence");
+
+    setTimeout(function () {
+      openEvidenceDetail(evidenceId);
+    }, 0);
+  }
+}
 
 // --- Quick-view modal (used from the timeline) -------------------------
+
 function openEvidenceModal(evidenceId) {
   var ev = findEvidenceById(evidenceId);
   if (!ev) return;
@@ -128,6 +151,8 @@ function openEvidenceModal(evidenceId) {
     modal = document.createElement("div");
     modal.id = "quickViewModal";
     document.body.appendChild(modal);
+
+    modal.addEventListener("click", handleQuickViewClick);
   }
 
   modal.innerHTML =
@@ -139,19 +164,4 @@ function openEvidenceModal(evidenceId) {
     '<button type="button" class="btn btn-primary btn-small" data-open-full="' + ev.id + '">Open full evidence</button>' +
     "</div></div>";
 
-  modalCloseListenerCount++;
-  console.log("modal opened, active close listeners:", modalCloseListenerCount);
-
-  modal.addEventListener("click", function (e) {
-    if (e.target.classList.contains("modal-close-btn") || e.target.classList.contains("modal-backdrop")) {
-      modal.innerHTML = "";
-    }
-    if (e.target.getAttribute && e.target.getAttribute("data-open-full")) {
-      modal.innerHTML = "";
-      navigateTo("evidence");
-      setTimeout(function () {
-        openEvidenceDetail(e.target.getAttribute("data-open-full"));
-      }, 0);
-    }
-  });
 }
