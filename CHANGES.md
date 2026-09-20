@@ -100,7 +100,6 @@ Changed the Dashboard routing condition so that `renderDashboard()` runs every t
 
 Before:
 
-```js
 if (hash === "dashboard" && !viewRendered.dashboard) {
   renderDashboard();
   viewRendered.dashboard = true;
@@ -111,3 +110,14 @@ if (hash === "dashboard") {
   renderDashboard();
   viewRendered.dashboard = true;
 }
+
+### Bug 3 — Prevent duplicate modal click listeners
+
+### Change
+Moved the quick-view modal click handler into a separate `handleQuickViewClick()` function and attached it only when the modal element is created.
+
+### Reason
+Previously, `openEvidenceModal()` added a new click listener every time the modal was opened, causing multiple listeners to accumulate on the same modal element.
+
+### Verification
+Opened and closed the quick-view modal repeatedly and confirmed with a breakpoint that one click now executes the modal handler only once.

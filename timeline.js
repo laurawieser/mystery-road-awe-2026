@@ -21,9 +21,6 @@ import {
   navigateTo
 } from "./navigation.js";
 
-var modalCloseListenerCount = 0; 
-
-
 export function populateTimelineDropdowns() {
   var personSelect = document.getElementById("timelinePersonFilter");
   var locationSelect = document.getElementById("timelineLocationFilter");
