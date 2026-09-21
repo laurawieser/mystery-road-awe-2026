@@ -58,7 +58,7 @@ window.navigateTo = navigateTo;
 // ---------------------------------------------------------------------
 
 
-var loadingStepsRemaining = 2; 
+let loadingStepsRemaining = 2; 
 
 
 // ---------------------------------------------------------------------
@@ -66,8 +66,8 @@ var loadingStepsRemaining = 2;
 // ---------------------------------------------------------------------
 
 function showLoadingOverlay(msg) {
-  var overlay = document.getElementById("loadingOverlay");
-  var text = document.getElementById("loadingText");
+  const overlay = document.getElementById("loadingOverlay");
+  const text = document.getElementById("loadingText");
   if (text) text.textContent = msg;
   if (overlay) overlay.classList.remove("hidden");
 }
@@ -75,7 +75,7 @@ function showLoadingOverlay(msg) {
 function hideLoadingStep() {
   loadingStepsRemaining--;
   if (loadingStepsRemaining <= 0) {
-    var overlay = document.getElementById("loadingOverlay");
+    const overlay = document.getElementById("loadingOverlay");
     if (overlay) overlay.classList.add("hidden");
   }
 }
@@ -133,21 +133,21 @@ function loadAllData() {
 
 
 function handleHashChange() {
-  var hash = window.location.hash.replace("#", "");
-  var validViews = ["dashboard", "evidence", "people", "timeline", "workspace"];
+  let hash = window.location.hash.replace("#", "");
+  const validViews = ["dashboard", "evidence", "people", "timeline", "workspace"];
   if (validViews.indexOf(hash) === -1) {
     hash = "dashboard";
   }
   setCurrentPage(hash);
 
-  var sections = document.querySelectorAll(".view");
-  for (var i = 0; i < sections.length; i++) {
+  const sections = document.querySelectorAll(".view");
+  for (let i = 0; i < sections.length; i++) {
     sections[i].classList.remove("active");
   }
   document.getElementById("view-" + hash).classList.add("active");
 
-  var navButtons = document.querySelectorAll(".nav-btn");
-  for (var n = 0; n < navButtons.length; n++) {
+  const navButtons = document.querySelectorAll(".nav-btn");
+  for (let n = 0; n < navButtons.length; n++) {
     navButtons[n].classList.remove("active");
     if (navButtons[n].getAttribute("data-view") === hash) {
       navButtons[n].classList.add("active");
@@ -195,7 +195,7 @@ function setupEventListeners() {
   var navButtons = document.querySelectorAll(".nav-btn");
   for (let i = 0; i < navButtons.length; i++) {
     navButtons[i].addEventListener("click", function () {
-      var targetView = navButtons[i].getAttribute("data-view");
+      const targetView = navButtons[i].getAttribute("data-view");
       console.log("nav clicked:", targetView);
     });
   }
@@ -207,7 +207,6 @@ function setupEventListeners() {
   document.getElementById("filterLocation").addEventListener("change", renderEvidenceList);
 
   document.getElementById("filterStatus").addEventListener("change", renderEvidenceList);
-  document.getElementById("filterStatus").setAttribute("onchange", "renderEvidenceList()");
 
   document.getElementById("filterRelevance").addEventListener("change", renderEvidenceList);
 
@@ -234,7 +233,7 @@ function initApp() {
 
   loadAllData().then(function () {
     handleHashChange();
-    var firstNote = loadNoteAsync("E01");
+    const firstNote = loadNoteAsync("E01");
     console.log("First note preview:", firstNote);
   });
 }

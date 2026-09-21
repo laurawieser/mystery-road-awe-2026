@@ -12,7 +12,7 @@ import {
   navigateTo
 } from "./navigation.js";
 
-var STORAGE_KEY_HYPOTHESIS = "remotion_hypothesis";
+const STORAGE_KEY_HYPOTHESIS = "remotion_hypothesis";
 
 
 export function renderWorkspace() {
@@ -23,10 +23,10 @@ export function renderWorkspace() {
 }
 
 function renderBookmarksList() {
-  var container = document.getElementById("bookmarksList");
+  const container = document.getElementById("bookmarksList");
   if (!container) return;
 
-  var bookmarkedItems = allEvidence.filter(function (ev) {
+  const bookmarkedItems = allEvidence.filter(function (ev) {
     return ev.bookmarked;
   });
 
@@ -35,19 +35,19 @@ function renderBookmarksList() {
     return;
   }
 
-  var html = "";
-  for (var i = 0; i < bookmarkedItems.length; i++) {
-    var ev = bookmarkedItems[i];
+  let html = "";
+  for (let i = 0; i < bookmarkedItems.length; i++) {
+    const ev = bookmarkedItems[i];
     html += '<div class="mini-list-item"><strong>' + ev.id + "</strong> &mdash; " + ev.title +
       ' <button type="button" class="btn btn-small btn-secondary" data-open-evidence="' + ev.id + '">Open</button></div>';
   }
   container.innerHTML = html;
 
-  var openButtons = container.querySelectorAll("[data-open-evidence]");
-  for (var b = 0; b < openButtons.length; b++) {
+  const openButtons = container.querySelectorAll("[data-open-evidence]");
+  for (let b = 0; b < openButtons.length; b++) {
     openButtons[b].addEventListener("click", function (e) {
       navigateTo("evidence");
-      var id = e.target.getAttribute("data-open-evidence");
+      const id = e.target.getAttribute("data-open-evidence");
       setTimeout(function () {
         openEvidenceDetail(id);
       }, 0);
@@ -56,12 +56,12 @@ function renderBookmarksList() {
 }
 
 function renderNotesList() {
-  var container = document.getElementById("notesList");
+  const container = document.getElementById("notesList");
   if (!container) return;
 
-  var noteEntries = [];
-  for (var i = 0; i < allEvidence.length; i++) {
-    var note = notesStore[allEvidence[i].id];
+  const noteEntries = [];
+  for (let i = 0; i < allEvidence.length; i++) {
+    const note = notesStore[allEvidence[i].id];
     if (note) {
       noteEntries.push({ index: i, evidenceId: allEvidence[i].id, title: allEvidence[i].title, text: note });
     }
@@ -72,9 +72,9 @@ function renderNotesList() {
     return;
   }
 
-  var html = "";
-  for (var n = 0; n < noteEntries.length; n++) {
-    var entry = noteEntries[n];
+  let html = "";
+  for (let n = 0; n < noteEntries.length; n++) {
+    const entry = noteEntries[n];
     html += '<div class="mini-list-item"><strong>' + entry.evidenceId + "</strong> &mdash; " + entry.title;
     html += '<div id="noteText-' + entry.index + '">' + entry.text + "</div></div>"; // unsafe innerHTML rendering, same as the note preview
   }
@@ -82,25 +82,25 @@ function renderNotesList() {
 }
 
 export function populateHypothesisDropdowns() {
-  var suspectSelect = document.getElementById("hypSuspect");
-  var evidenceSelect = document.getElementById("hypEvidence");
+  const suspectSelect = document.getElementById("hypSuspect");
+  const evidenceSelect = document.getElementById("hypEvidence");
   if (!suspectSelect || !evidenceSelect) return;
 
-  var currentSuspect = suspectSelect.value;
+  const currentSuspect = suspectSelect.value;
   suspectSelect.innerHTML = '<option value="">Select a person…</option>';
-  for (var p = 0; p < allPeople.length; p++) {
+  for (let p = 0; p < allPeople.length; p++) {
     suspectSelect.innerHTML += '<option value="' + allPeople[p].id + '">' + allPeople[p].name + "</option>";
   }
   suspectSelect.value = currentSuspect;
 
   evidenceSelect.innerHTML = "";
-  for (var i = 0; i < allEvidence.length; i++) {
+  for (let i = 0; i < allEvidence.length; i++) {
     evidenceSelect.innerHTML += '<option value="' + allEvidence[i].id + '">' + allEvidence[i].id + " - " + allEvidence[i].title + "</option>";
   }
 }
 
 function saveHypothesis() {
-  var draft = {
+  const draft = {
     suspectId: document.getElementById("hypSuspect").value,
     nature: document.getElementById("hypNature").value,
     evidenceIds: getSelectedOptions(document.getElementById("hypEvidence")),
@@ -118,7 +118,7 @@ function saveHypothesis() {
     return;
   }
 
-  var msg = document.getElementById("hypothesisSavedMsg");
+  const msg = document.getElementById("hypothesisSavedMsg");
   msg.classList.remove("hidden");
   setTimeout(function () {
     msg.classList.add("hidden");
@@ -126,18 +126,18 @@ function saveHypothesis() {
 }
 
 function getSelectedOptions(selectEl) {
-  var result = [];
-  for (var i = 0; i < selectEl.options.length; i++) {
+  const result = [];
+  for (let i = 0; i < selectEl.options.length; i++) {
     if (selectEl.options[i].selected) result.push(selectEl.options[i].value);
   }
   return result;
 }
 
 function loadHypothesisFromStorage() {
-  var raw = localStorage.getItem(STORAGE_KEY_HYPOTHESIS);
+  const raw = localStorage.getItem(STORAGE_KEY_HYPOTHESIS);
   if (!raw) return;
 
-  var draft = JSON.parse(raw); 
+  const draft = JSON.parse(raw); 
 
   document.getElementById("hypSuspect").value = draft.suspectId || "";
   document.getElementById("hypNature").value = draft.nature || "";
@@ -146,9 +146,9 @@ function loadHypothesisFromStorage() {
   document.getElementById("hypExplanation").value = draft.explanation || "";
   document.getElementById("hypAlternative").value = draft.alternative || "";
 
-  var evidenceSelect = document.getElementById("hypEvidence");
-  var savedIds = draft.evidenceIds || [];
-  for (var i = 0; i < evidenceSelect.options.length; i++) {
+  const evidenceSelect = document.getElementById("hypEvidence");
+  const savedIds = draft.evidenceIds || [];
+  for (let i = 0; i < evidenceSelect.options.length; i++) {
     evidenceSelect.options[i].selected = savedIds.indexOf(evidenceSelect.options[i].value) !== -1;
   }
 }

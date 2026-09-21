@@ -218,26 +218,26 @@ A guided tour, so you know where things live before you need them.
 - [x] **Console:** filter down to only errors, then only warnings, using the log-level filter. Use
       the text filter box to search for one specific message. Try "Preserve log" and explain what
       it changes.
-- [ ] **Network:** reload with the Network tab open, find the requests for the app's JSON data
+- [x] **Network:** reload with the Network tab open, find the requests for the app's JSON data
       files, and for one request inspect its status code, response body, and timing. Throttle the
       connection (e.g. "Slow 3G") and reload.
-- [ ] **Application** (Chrome) / **Storage** (Firefox): find this app's `localStorage` entries,
+- [x] **Application** (Chrome) / **Storage** (Firefox): find this app's `localStorage` entries,
       inspect their values, edit one directly in DevTools, and reload to see the effect. Replace a
       value with text that isn't valid JSON and see what happens.
-- [ ] **Elements:** inspect a rendered evidence card or person card in the DOM, and connect what you
+- [x] **Elements:** inspect a rendered evidence card or person card in the DOM, and connect what you
       see there back to the code that generated it.
 
 **Questions** (depend on the tasks above)
 
-- [ ] What's the practical difference between `console.log`, `console.warn`, and `console.error`,
+- [x] What's the practical difference between `console.log`, `console.warn`, and `console.error`,
       beyond just the color?
-- [ ] Using the Network tab, explain what "Status," "Type," and "Time" tell you about one of the
+- [x] Using the Network tab, explain what "Status," "Type," and "Time" tell you about one of the
       app's `fetch()` requests. If that request returned a 404 instead of a 200, how would the app
       currently react?
-- [ ] List this app's `localStorage` keys and what each one is for. What happens if you manually
+- [x] List this app's `localStorage` keys and what each one is for. What happens if you manually
       corrupt one of them and reload — and *why* does that happen, according to the code that reads
       it back out?
-- [ ] After throttling your network and reloading, what did you observe about which parts of the UI
+- [x] After throttling your network and reloading, what did you observe about which parts of the UI
       populate first, last, or briefly show wrong/empty values? Why does the order matter here?
 
 ---
@@ -246,24 +246,24 @@ A guided tour, so you know where things live before you need them.
 
 **Tasks**
 
-- [ ] List every top-level `var` at the top of the original `app.js`. For at least three of them,
+- [x] List every top-level `var` at the top of the original `app.js`. For at least three of them,
       explain what could go wrong if two unrelated pieces of code both tried to use a variable with
       that name — and how your module split from Demo 1 already prevents (or doesn't yet prevent)
       that.
-- [ ] Go through the codebase and replace `var` with `const` or `let` everywhere it's declared,
+- [x] Go through the codebase and replace `var` with `const` or `let` everywhere it's declared,
       deciding `const` vs. `let` deliberately for each one.
 - [ ] Identify at least two more "code smells" anywhere in the app, beyond the globals above. Fix
       them, and explain why they were bad and how your fix addresses that.
 
 **Questions** (depend on the tasks above)
 
-- [ ] What is the difference between `var`, `let`, and `const` in terms of scope and reassignment?
+- [x] What is the difference between `var`, `let`, and `const` in terms of scope and reassignment?
       Give a concrete example — from this codebase or a hypothetical grounded in a pattern you saw
       — of a bug that `var`'s scoping rules make *possible* and `let` would prevent.
-- [ ] What is an "accidental global," and how does non-strict-mode JavaScript allow it to happen by
+- [x] What is an "accidental global," and how does non-strict-mode JavaScript allow it to happen by
       simply forgetting a keyword? Now that your code runs as ES modules (which are always strict
       mode), what happens instead if you make that same mistake?
-- [ ] "The code technically works" and "the code is clean" are not the same bar. Give one concrete
+- [x] "The code technically works" and "the code is clean" are not the same bar. Give one concrete
       example from this app of something that worked correctly but was still worth refactoring —
       and explain what real cost the messy version has (bug risk, onboarding time, review
       difficulty...).

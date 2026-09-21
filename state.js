@@ -6,7 +6,7 @@ export let caseData = {};
 export let bookmarks = [];
 export let notesStore = {}; 
 export let currentPage = "dashboard";
-export let viewRendered = {
+export const viewRendered = {
   dashboard: false,
   evidence: false,
   people: false,
