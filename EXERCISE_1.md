@@ -182,29 +182,29 @@ actual debugger or a VS Code extension for debugging — ideally on one of the b
 
 **Tasks**
 
-- [ ] Set at least one real breakpoint (not a `console.log`) inside a function connected to a bug
+- [x] Set at least one real breakpoint (not a `console.log`) inside a function connected to a bug
       you investigated, and step through it line by line.
-- [ ] Use "Step over", "Step into", and "Step out" at least once each, on purpose, and notice the
+- [x] Use "Step over", "Step into", and "Step out" at least once each, on purpose, and notice the
       difference.
-- [ ] While paused at a breakpoint, open the Call Stack panel and explain, for a real example, "who
+- [x] While paused at a breakpoint, open the Call Stack panel and explain, for a real example, "who
       called this function, and with what."
-- [ ] Use a **conditional breakpoint** or a **logpoint** at least once (e.g. only break when a loop
+- [x] Use a **conditional breakpoint** or a **logpoint** at least once (e.g. only break when a loop
       variable equals a specific value, or a specific ID is being processed).
-- [ ] While paused, use the Scope/Watch panel (or hover over variables) to track a value across
+- [x] While paused, use the Scope/Watch panel (or hover over variables) to track a value across
       several steps of execution, and edit a variable's value live to test a hypothesis before
       writing the actual code change.
 
 **Questions** (depend on the tasks above)
 
-- [ ] What's the difference between "Step over" and "Step into"? Give a concrete example from this
+- [x] What's the difference between "Step over" and "Step into"? Give a concrete example from this
       app where using the wrong one would waste your time.
-- [ ] What is the call stack, and how did reading it help you figure out where a value came from or
+- [x] What is the call stack, and how did reading it help you figure out where a value came from or
       why a function ran when it did?
-- [ ] What is a conditional breakpoint, and why is it more efficient than repeatedly hitting
+- [x] What is a conditional breakpoint, and why is it more efficient than repeatedly hitting
       "resume" to reach the case you care about?
-- [ ] What's the difference between a breakpoint you set in the DevTools UI and a `debugger;`
+- [x] What's the difference between a breakpoint you set in the DevTools UI and a `debugger;`
       statement written directly in the source code? When would you prefer one over the other?
-- [ ] Describe a moment where `console.log` alone would *not* have been enough to find a bug, but
+- [x] Describe a moment where `console.log` alone would *not* have been enough to find a bug, but
       stepping through with the debugger was. What did the debugger show you that logging couldn't?
 
 ---
@@ -215,7 +215,7 @@ A guided tour, so you know where things live before you need them.
 
 **Tasks**
 
-- [ ] **Console:** filter down to only errors, then only warnings, using the log-level filter. Use
+- [x] **Console:** filter down to only errors, then only warnings, using the log-level filter. Use
       the text filter box to search for one specific message. Try "Preserve log" and explain what
       it changes.
 - [ ] **Network:** reload with the Network tab open, find the requests for the app's JSON data
