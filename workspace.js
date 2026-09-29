@@ -26,9 +26,7 @@ function renderBookmarksList() {
   const container = document.getElementById("bookmarksList");
   if (!container) return;
 
-  const bookmarkedItems = allEvidence.filter(function (ev) {
-    return ev.bookmarked;
-  });
+  const bookmarkedItems = allEvidence.filter((ev) => ev.bookmarked);
 
   if (bookmarkedItems.length === 0) {
     container.innerHTML = "<p>No bookmarked evidence yet. Bookmark items from the Evidence view.</p>";
@@ -137,7 +135,14 @@ function loadHypothesisFromStorage() {
   const raw = localStorage.getItem(STORAGE_KEY_HYPOTHESIS);
   if (!raw) return;
 
-  const draft = JSON.parse(raw); 
+  let draft;
+
+  try {
+    draft = JSON.parse(raw);
+  } catch (err) {
+    console.warn("Could not read stored hypothesis", err);
+    return;
+  }
 
   document.getElementById("hypSuspect").value = draft.suspectId || "";
   document.getElementById("hypNature").value = draft.nature || "";

@@ -194,9 +194,7 @@ function handleBookmarkClick(evidenceId) {
     bookmarks.push(evidenceId);
     ev.bookmarked = true;
   } else {
-    setBookmarks(bookmarks.filter(function (id){
-      return id !== evidenceId;
-    }));
+    setBookmarks(bookmarks.filter((id) => id !== evidenceId));
     ev.bookmarked = false;
   }
   saveBookmarksToStorage();

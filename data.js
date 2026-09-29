@@ -10,37 +10,28 @@ import {
   setEvidenceViewLoading 
 } from "./evidence.js";
 
-export function loadCorePeopleAndLocations() {
-  return fetch("data/case.json").then(function (caseRes) {
-    return caseRes.json().then(function (caseJson) {
-      setCaseData(caseJson);
+export async function loadCorePeopleAndLocations() {
+  const caseRes = await fetch("data/case.json");
+  const caseJson = await caseRes.json();
+  setCaseData(caseJson);
 
-      return fetch("data/people.json").then(function (peopleRes) {
-        return peopleRes.json().then(function (peopleJson) {
-          setAllPeople(peopleJson);
+  const peopleRes = await fetch("data/people.json");
+  const peopleJson = await peopleRes.json();
+  setAllPeople(peopleJson);
 
-          return fetch("data/locations.json").then(function (locationsRes) {
-            return locationsRes.json().then(function (locationsJson) {
-              setAllLocations(locationsJson);
-
-            });
-          });
-        });
-      });
-    });
-  });
+  const locationsRes = await fetch("data/locations.json");
+  const locationsJson = await locationsRes.json();
+  setAllLocations(locationsJson);
 }
 
-export function loadEvidenceData() {
-  return fetch("data/evidence.json")
-    .then(function (res) {
-      return res.json();
-    })
-    .then(function (data) {
-      setAllEvidence(data);
-      setEvidenceViewLoading(false);
-      return data;
-    });
+export async function loadEvidenceData() {
+  const res = await fetch("data/evidence.json");
+  const data = await res.json();
+
+  setAllEvidence(data);
+  setEvidenceViewLoading(false);
+
+  return data;
 }
 
 export function loadTimelineData() {
