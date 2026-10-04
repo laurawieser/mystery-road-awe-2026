@@ -1,10 +1,4 @@
-import {
-  bookmarks,
-  notesStore,
-  setBookmarks,
-  setNotesStore
-} from "./state.js";
-
+import { bookmarks, notesStore, setBookmarks, setNotesStore } from "./state.js";
 
 const STORAGE_KEY_BOOKMARKS = "remotion_bookmarks";
 const STORAGE_KEY_NOTES = "remotion_notes";
@@ -33,14 +27,13 @@ export function loadNoteForEvidence(evidenceId) {
   return notesStore[evidenceId] || "";
 }
 
-
 export function loadNotesFromStorage() {
   const raw = localStorage.getItem(STORAGE_KEY_NOTES);
   if (!raw) {
     setNotesStore({});
     return;
   }
-  
+
   try {
     const parsed = JSON.parse(raw);
     setNotesStore(parsed);
@@ -50,12 +43,8 @@ export function loadNotesFromStorage() {
   }
 }
 
-
 export function loadNoteAsync(evidenceId) {
   return new Promise(function (resolve) {
     resolve(notesStore[evidenceId] || "");
   });
 }
-
-
-

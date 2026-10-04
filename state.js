@@ -4,16 +4,15 @@ export let allLocations = [];
 export let allTimeline = [];
 export let caseData = {};
 export let bookmarks = [];
-export let notesStore = {}; 
+export let notesStore = {};
 export let currentPage = "dashboard";
 export const viewRendered = {
   dashboard: false,
   evidence: false,
   people: false,
   timeline: false,
-  workspace: false
+  workspace: false,
 };
-
 
 export function setAllEvidence(value) {
   allEvidence = value;

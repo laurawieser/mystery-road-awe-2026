@@ -1,30 +1,25 @@
-import { 
+import {
   loadCorePeopleAndLocations,
   loadEvidenceData,
-  loadTimelineData
+  loadTimelineData,
 } from "./data.js";
 
 import {
   allEvidence,
   currentPage,
   setCurrentPage,
-  viewRendered
+  viewRendered,
 } from "./state.js";
-
 
 import {
   loadBookmarksFromStorage,
   loadNotesFromStorage,
-  loadNoteAsync
+  loadNoteAsync,
 } from "./storage.js";
 
 import { renderDashboard } from "./dashboard.js";
 
-import {
-  switchPeopleTab,
-  renderPeople,
-  renderLocations
-} from "./people.js";
+import { switchPeopleTab, renderPeople, renderLocations } from "./people.js";
 
 window.switchPeopleTab = switchPeopleTab;
 
@@ -34,22 +29,14 @@ import {
   applyStoredBookmarkFlags,
   clearFilters,
   handleSearchInput,
-  setFilteredEvidence
+  setFilteredEvidence,
 } from "./evidence.js";
 
-import {
-  populateTimelineDropdowns,
-  renderTimeline
-} from "./timeline.js";
+import { populateTimelineDropdowns, renderTimeline } from "./timeline.js";
 
-import {
-  renderWorkspace,
-  populateHypothesisDropdowns
-} from "./workspace.js";
+import { renderWorkspace, populateHypothesisDropdowns } from "./workspace.js";
 
-import {
-  navigateTo
-} from "./navigation.js";
+import { navigateTo } from "./navigation.js";
 
 window.navigateTo = navigateTo;
 
@@ -57,9 +44,7 @@ window.navigateTo = navigateTo;
 // GLOBAL STATE
 // ---------------------------------------------------------------------
 
-
-let loadingStepsRemaining = 2; 
-
+let loadingStepsRemaining = 2;
 
 // ---------------------------------------------------------------------
 // DATA LOADING
@@ -79,7 +64,6 @@ function hideLoadingStep() {
     if (overlay) overlay.classList.add("hidden");
   }
 }
-
 
 function loadAllData() {
   showLoadingOverlay("Loading case file…");
@@ -125,16 +109,19 @@ function loadAllData() {
   });
 }
 
-
-
 // ---------------------------------------------------------------------
 // NAVIGATION / HASH ROUTING
 // ---------------------------------------------------------------------
 
-
 function handleHashChange() {
   let hash = window.location.hash.replace("#", "");
-  const validViews = ["dashboard", "evidence", "people", "timeline", "workspace"];
+  const validViews = [
+    "dashboard",
+    "evidence",
+    "people",
+    "timeline",
+    "workspace",
+  ];
   if (validViews.indexOf(hash) === -1) {
     hash = "dashboard";
   }
@@ -173,7 +160,6 @@ function handleHashChange() {
   }
 }
 
-
 // ---------------------------------------------------------------------
 // EVIDENCE CATALOGUE
 // ---------------------------------------------------------------------
@@ -183,7 +169,6 @@ function populateAllDropdowns() {
   populateTimelineDropdowns();
   populateHypothesisDropdowns();
 }
-
 
 // ---------------------------------------------------------------------
 // EVENT LISTENER SETUP
@@ -200,26 +185,51 @@ function setupEventListeners() {
     });
   }
 
-  document.getElementById("evidenceSearch").addEventListener("input", handleSearchInput);
+  document
+    .getElementById("evidenceSearch")
+    .addEventListener("input", handleSearchInput);
 
-  document.getElementById("filterType").addEventListener("change", renderEvidenceList);
-  document.getElementById("filterPerson").addEventListener("change", renderEvidenceList);
-  document.getElementById("filterLocation").addEventListener("change", renderEvidenceList);
+  document
+    .getElementById("filterType")
+    .addEventListener("change", renderEvidenceList);
+  document
+    .getElementById("filterPerson")
+    .addEventListener("change", renderEvidenceList);
+  document
+    .getElementById("filterLocation")
+    .addEventListener("change", renderEvidenceList);
 
-  document.getElementById("filterStatus").addEventListener("change", renderEvidenceList);
+  document
+    .getElementById("filterStatus")
+    .addEventListener("change", renderEvidenceList);
 
-  document.getElementById("filterRelevance").addEventListener("change", renderEvidenceList);
+  document
+    .getElementById("filterRelevance")
+    .addEventListener("change", renderEvidenceList);
 
-  document.getElementById("clearFiltersBtn").addEventListener("click", clearFilters);
+  document
+    .getElementById("clearFiltersBtn")
+    .addEventListener("click", clearFilters);
 
-  document.getElementById("timelineOrder").addEventListener("change", renderTimeline);
-  document.getElementById("timelinePersonFilter").addEventListener("change", renderTimeline);
-  document.getElementById("timelineLocationFilter").addEventListener("change", renderTimeline);
-  document.getElementById("timelineTypeFilter").addEventListener("change", renderTimeline);
+  document
+    .getElementById("timelineOrder")
+    .addEventListener("change", renderTimeline);
+  document
+    .getElementById("timelinePersonFilter")
+    .addEventListener("change", renderTimeline);
+  document
+    .getElementById("timelineLocationFilter")
+    .addEventListener("change", renderTimeline);
+  document
+    .getElementById("timelineTypeFilter")
+    .addEventListener("change", renderTimeline);
 
-  document.getElementById("hypConfidence").addEventListener("input", function (e) {
-    document.getElementById("hypConfidenceValue").textContent = e.target.value;
-  });
+  document
+    .getElementById("hypConfidence")
+    .addEventListener("input", function (e) {
+      document.getElementById("hypConfidenceValue").textContent =
+        e.target.value;
+    });
 }
 
 // ---------------------------------------------------------------------

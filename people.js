@@ -1,21 +1,10 @@
-import {
-  allEvidence,
-  allPeople,
-  allLocations
-} from "./state.js";
+import { allEvidence, allPeople, allLocations } from "./state.js";
 
-import {
-  evidenceMentionsPerson
-} from "./lookup.js";
+import { evidenceMentionsPerson } from "./lookup.js";
 
-import{
-    renderEvidenceList
-} from "./evidence.js";
+import { renderEvidenceList } from "./evidence.js";
 
-import {
-  navigateTo
-} from "./navigation.js";
-
+import { navigateTo } from "./navigation.js";
 
 let currentPeopleTab = "people";
 
@@ -39,7 +28,6 @@ export function switchPeopleTab(tab) {
   }
 }
 
-
 export function renderPeople() {
   const container = document.getElementById("peoplePanel");
   let html = "";
@@ -49,8 +37,18 @@ export function renderPeople() {
 
     html += '<div class="person-card">';
     html += '<div class="person-card-header">';
-    html += '<img class="person-avatar" src="' + person.avatar + '" alt="Portrait of ' + person.name + '">';
-    html += "<div><h3>" + person.name + "</h3><div class=\"person-role\">" + person.role + "</div></div>";
+    html +=
+      '<img class="person-avatar" src="' +
+      person.avatar +
+      '" alt="Portrait of ' +
+      person.name +
+      '">';
+    html +=
+      "<div><h3>" +
+      person.name +
+      '</h3><div class="person-role">' +
+      person.role +
+      "</div></div>";
     html += "</div>";
     html += "<p><strong>Speciality:</strong> " + person.speciality + "</p>";
     html += "<ul>";
@@ -58,9 +56,20 @@ export function renderPeople() {
       html += "<li>" + person.responsibilities[r] + "</li>";
     }
     html += "</ul>";
-    html += '<div class="person-statement">&ldquo;' + person.statement + '&rdquo;</div>';
-    html += "<p>" + count + " related evidence item" + (count === 1 ? "" : "s") + " &mdash; ";
-    html += '<button type="button" class="evidence-count-link" data-person-id="' + person.id + '">view</button></p>';
+    html +=
+      '<div class="person-statement">&ldquo;' +
+      person.statement +
+      "&rdquo;</div>";
+    html +=
+      "<p>" +
+      count +
+      " related evidence item" +
+      (count === 1 ? "" : "s") +
+      " &mdash; ";
+    html +=
+      '<button type="button" class="evidence-count-link" data-person-id="' +
+      person.id +
+      '">view</button></p>';
     html += "</div>";
   }
   container.innerHTML = html;
@@ -86,7 +95,6 @@ function countEvidenceForPerson(person) {
   return count;
 }
 
-
 export function renderLocations() {
   const container = document.getElementById("locationsPanel");
   let html = "";
@@ -103,4 +111,3 @@ export function renderLocations() {
   }
   container.innerHTML = html;
 }
-
