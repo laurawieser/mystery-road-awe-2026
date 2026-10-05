@@ -41,9 +41,9 @@ export async function loadEvidenceData(): Promise<Evidence[]> {
 }
 
 export async function loadTimelineData(): Promise<TimelineEvent[]> {
-  const res = await fetch("data/timeline.json")
+  const res = await fetch("data/timeline.json");
   const timeline: TimelineEvent[] = await res.json();
-  
+
   setAllTimeline(timeline);
   return timeline;
 }

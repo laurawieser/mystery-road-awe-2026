@@ -1,19 +1,24 @@
 import { allEvidence, allPeople, allLocations } from "./state.js";
-
 import { evidenceMentionsPerson } from "./lookup.js";
-
 import { renderEvidenceList } from "./evidence.js";
-
 import { navigateTo } from "./navigation.js";
+import type { Person } from "./types.js";
 
-let currentPeopleTab = "people";
+type PeopleTab = "people" | "locations";
 
-export function switchPeopleTab(tab) {
+let currentPeopleTab: PeopleTab = "people";
+
+export function switchPeopleTab(tab: PeopleTab): void {
   currentPeopleTab = tab;
+
   const peoplePanel = document.getElementById("peoplePanel");
   const locationsPanel = document.getElementById("locationsPanel");
   const peopleTabBtn = document.getElementById("tabPeopleBtn");
   const locationsTabBtn = document.getElementById("tabLocationsBtn");
+
+  if (!peoplePanel || !locationsPanel || !peopleTabBtn || !locationsTabBtn) {
+    return;
+  }
 
   if (tab === "people") {
     peoplePanel.classList.remove("hidden");
@@ -28,9 +33,15 @@ export function switchPeopleTab(tab) {
   }
 }
 
-export function renderPeople() {
+export function renderPeople(): void {
   const container = document.getElementById("peoplePanel");
+
+  if (!container) {
+    return;
+  }
+
   let html = "";
+
   for (let i = 0; i < allPeople.length; i++) {
     const person = allPeople[i];
     const count = countEvidenceForPerson(person);
@@ -52,9 +63,11 @@ export function renderPeople() {
     html += "</div>";
     html += "<p><strong>Speciality:</strong> " + person.speciality + "</p>";
     html += "<ul>";
+
     for (let r = 0; r < person.responsibilities.length; r++) {
       html += "<li>" + person.responsibilities[r] + "</li>";
     }
+
     html += "</ul>";
     html +=
       '<div class="person-statement">&ldquo;' +
@@ -72,14 +85,27 @@ export function renderPeople() {
       '">view</button></p>';
     html += "</div>";
   }
+
   container.innerHTML = html;
 
   const links = container.querySelectorAll(".evidence-count-link");
+
   for (let l = 0; l < links.length; l++) {
     links[l].addEventListener("click", function (e) {
-      const personId = e.target.getAttribute("data-person-id");
-      document.getElementById("filterPerson").value = personId;
+      const target = e.currentTarget as HTMLElement;
+      const personId = target.getAttribute("data-person-id");
+
+      const filterPerson = document.getElementById(
+        "filterPerson",
+      ) as HTMLSelectElement | null;
+
+      if (!personId || !filterPerson) {
+        return;
+      }
+
+      filterPerson.value = personId;
       navigateTo("evidence");
+
       setTimeout(function () {
         renderEvidenceList();
       }, 0);
@@ -87,27 +113,41 @@ export function renderPeople() {
   }
 }
 
-function countEvidenceForPerson(person) {
+function countEvidenceForPerson(person: Person): number {
   let count = 0;
+
   for (let i = 0; i < allEvidence.length; i++) {
-    if (evidenceMentionsPerson(allEvidence[i], person)) count++;
+    if (evidenceMentionsPerson(allEvidence[i], person)) {
+      count++;
+    }
   }
+
   return count;
 }
 
-export function renderLocations() {
+export function renderLocations(): void {
   const container = document.getElementById("locationsPanel");
+
+  if (!container) {
+    return;
+  }
+
   let html = "";
+
   for (let i = 0; i < allLocations.length; i++) {
     const loc = allLocations[i];
+
     html += '<div class="location-card">';
     html += "<h3>" + loc.id + " &mdash; " + loc.name + "</h3>";
     html += "<p>" + loc.description + "</p>";
     html += "<p><strong>Contains:</strong></p><ul>";
+
     for (let c = 0; c < loc.contains.length; c++) {
       html += "<li>" + loc.contains[c] + "</li>";
     }
+
     html += "</ul></div>";
   }
+
   container.innerHTML = html;
 }

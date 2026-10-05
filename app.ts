@@ -18,10 +18,7 @@ import {
 } from "./storage.js";
 
 import { renderDashboard } from "./dashboard.js";
-
 import { switchPeopleTab, renderPeople, renderLocations } from "./people.js";
-
-window.switchPeopleTab = switchPeopleTab;
 
 import {
   populateEvidenceDropdowns,
@@ -38,6 +35,16 @@ import { renderWorkspace, populateHypothesisDropdowns } from "./workspace.js";
 
 import { navigateTo } from "./navigation.js";
 
+import type { ViewName } from "./state.js";
+
+declare global {
+  interface Window {
+    switchPeopleTab: typeof switchPeopleTab;
+    navigateTo: typeof navigateTo;
+  }
+}
+
+window.switchPeopleTab = switchPeopleTab;
 window.navigateTo = navigateTo;
 
 // ---------------------------------------------------------------------
@@ -50,32 +57,42 @@ let loadingStepsRemaining = 2;
 // DATA LOADING
 // ---------------------------------------------------------------------
 
-function showLoadingOverlay(msg) {
+function showLoadingOverlay(msg: string): void {
   const overlay = document.getElementById("loadingOverlay");
   const text = document.getElementById("loadingText");
-  if (text) text.textContent = msg;
-  if (overlay) overlay.classList.remove("hidden");
-}
 
-function hideLoadingStep() {
-  loadingStepsRemaining--;
-  if (loadingStepsRemaining <= 0) {
-    const overlay = document.getElementById("loadingOverlay");
-    if (overlay) overlay.classList.add("hidden");
+  if (text) {
+    text.textContent = msg;
+  }
+
+  if (overlay) {
+    overlay.classList.remove("hidden");
   }
 }
 
-function loadAllData() {
+function hideLoadingStep(): void {
+  loadingStepsRemaining--;
+
+  if (loadingStepsRemaining <= 0) {
+    const overlay = document.getElementById("loadingOverlay");
+
+    if (overlay) {
+      overlay.classList.add("hidden");
+    }
+  }
+}
+
+function loadAllData(): Promise<void> {
   showLoadingOverlay("Loading case file…");
   loadingStepsRemaining = 2;
 
-  return loadCorePeopleAndLocations().then(function () {
+  return loadCorePeopleAndLocations().then(() => {
     hideLoadingStep();
     renderDashboard();
     populateAllDropdowns();
 
     loadEvidenceData()
-      .then(function () {
+      .then(() => {
         applyStoredBookmarkFlags();
         setFilteredEvidence(allEvidence);
         renderDashboard();
@@ -85,13 +102,14 @@ function loadAllData() {
           renderEvidenceList();
         }
       })
-      .catch(function (err) {
+      .catch((err: unknown) => {
         console.error("Failed to load evidence.json", err);
+
         alert("Evidence could not be loaded. Some views may be incomplete.");
       });
 
     loadTimelineData()
-      .then(function () {
+      .then(() => {
         renderDashboard();
 
         if (currentPage === "timeline") {
@@ -100,10 +118,10 @@ function loadAllData() {
 
         populateAllDropdowns();
       })
-      .catch(function (err) {
+      .catch((err: unknown) => {
         console.log("timeline load error", err);
       })
-      .finally(function () {
+      .finally(() => {
         hideLoadingStep();
       });
   });
@@ -113,29 +131,40 @@ function loadAllData() {
 // NAVIGATION / HASH ROUTING
 // ---------------------------------------------------------------------
 
-function handleHashChange() {
-  let hash = window.location.hash.replace("#", "");
-  const validViews = [
-    "dashboard",
-    "evidence",
-    "people",
-    "timeline",
-    "workspace",
-  ];
-  if (validViews.indexOf(hash) === -1) {
-    hash = "dashboard";
-  }
+function isViewName(value: string): value is ViewName {
+  return (
+    value === "dashboard" ||
+    value === "evidence" ||
+    value === "people" ||
+    value === "timeline" ||
+    value === "workspace"
+  );
+}
+
+function handleHashChange(): void {
+  const rawHash = window.location.hash.replace("#", "");
+
+  const hash: ViewName = isViewName(rawHash) ? rawHash : "dashboard";
+
   setCurrentPage(hash);
 
   const sections = document.querySelectorAll(".view");
+
   for (let i = 0; i < sections.length; i++) {
     sections[i].classList.remove("active");
   }
-  document.getElementById("view-" + hash).classList.add("active");
+
+  const activeSection = document.getElementById("view-" + hash);
+
+  if (activeSection) {
+    activeSection.classList.add("active");
+  }
 
   const navButtons = document.querySelectorAll(".nav-btn");
+
   for (let n = 0; n < navButtons.length; n++) {
     navButtons[n].classList.remove("active");
+
     if (navButtons[n].getAttribute("data-view") === hash) {
       navButtons[n].classList.add("active");
     }
@@ -155,7 +184,6 @@ function handleHashChange() {
     renderTimeline();
     viewRendered.timeline = true;
   } else if (hash === "workspace") {
-    // workspace is cheap enough that it always re-renders
     renderWorkspace();
   }
 }
@@ -164,7 +192,7 @@ function handleHashChange() {
 // EVIDENCE CATALOGUE
 // ---------------------------------------------------------------------
 
-function populateAllDropdowns() {
+function populateAllDropdowns(): void {
   populateEvidenceDropdowns();
   populateTimelineDropdowns();
   populateHypothesisDropdowns();
@@ -174,77 +202,121 @@ function populateAllDropdowns() {
 // EVENT LISTENER SETUP
 // ---------------------------------------------------------------------
 
-function setupEventListeners() {
+function setupEventListeners(): void {
   window.addEventListener("hashchange", handleHashChange);
 
-  var navButtons = document.querySelectorAll(".nav-btn");
+  const navButtons = document.querySelectorAll<HTMLElement>(".nav-btn");
+
   for (let i = 0; i < navButtons.length; i++) {
-    navButtons[i].addEventListener("click", function () {
+    navButtons[i].addEventListener("click", () => {
       const targetView = navButtons[i].getAttribute("data-view");
+
       console.log("nav clicked:", targetView);
     });
   }
 
-  document
-    .getElementById("evidenceSearch")
-    .addEventListener("input", handleSearchInput);
+  const evidenceSearch = document.getElementById("evidenceSearch");
 
-  document
-    .getElementById("filterType")
-    .addEventListener("change", renderEvidenceList);
-  document
-    .getElementById("filterPerson")
-    .addEventListener("change", renderEvidenceList);
-  document
-    .getElementById("filterLocation")
-    .addEventListener("change", renderEvidenceList);
+  if (evidenceSearch) {
+    evidenceSearch.addEventListener("input", handleSearchInput);
+  }
 
-  document
-    .getElementById("filterStatus")
-    .addEventListener("change", renderEvidenceList);
+  const filterType = document.getElementById("filterType");
 
-  document
-    .getElementById("filterRelevance")
-    .addEventListener("change", renderEvidenceList);
+  if (filterType) {
+    filterType.addEventListener("change", renderEvidenceList);
+  }
 
-  document
-    .getElementById("clearFiltersBtn")
-    .addEventListener("click", clearFilters);
+  const filterPerson = document.getElementById("filterPerson");
 
-  document
-    .getElementById("timelineOrder")
-    .addEventListener("change", renderTimeline);
-  document
-    .getElementById("timelinePersonFilter")
-    .addEventListener("change", renderTimeline);
-  document
-    .getElementById("timelineLocationFilter")
-    .addEventListener("change", renderTimeline);
-  document
-    .getElementById("timelineTypeFilter")
-    .addEventListener("change", renderTimeline);
+  if (filterPerson) {
+    filterPerson.addEventListener("change", renderEvidenceList);
+  }
 
-  document
-    .getElementById("hypConfidence")
-    .addEventListener("input", function (e) {
-      document.getElementById("hypConfidenceValue").textContent =
-        e.target.value;
+  const filterLocation = document.getElementById("filterLocation");
+
+  if (filterLocation) {
+    filterLocation.addEventListener("change", renderEvidenceList);
+  }
+
+  const filterStatus = document.getElementById("filterStatus");
+
+  if (filterStatus) {
+    filterStatus.addEventListener("change", renderEvidenceList);
+  }
+
+  const filterRelevance = document.getElementById("filterRelevance");
+
+  if (filterRelevance) {
+    filterRelevance.addEventListener("change", renderEvidenceList);
+  }
+
+  const clearFiltersBtn = document.getElementById("clearFiltersBtn");
+
+  if (clearFiltersBtn) {
+    clearFiltersBtn.addEventListener("click", clearFilters);
+  }
+
+  const timelineOrder = document.getElementById("timelineOrder");
+
+  if (timelineOrder) {
+    timelineOrder.addEventListener("change", renderTimeline);
+  }
+
+  const timelinePersonFilter = document.getElementById("timelinePersonFilter");
+
+  if (timelinePersonFilter) {
+    timelinePersonFilter.addEventListener("change", renderTimeline);
+  }
+
+  const timelineLocationFilter = document.getElementById(
+    "timelineLocationFilter",
+  );
+
+  if (timelineLocationFilter) {
+    timelineLocationFilter.addEventListener("change", renderTimeline);
+  }
+
+  const timelineTypeFilter = document.getElementById("timelineTypeFilter");
+
+  if (timelineTypeFilter) {
+    timelineTypeFilter.addEventListener("change", renderTimeline);
+  }
+
+  const hypConfidence = document.getElementById(
+    "hypConfidence",
+  ) as HTMLInputElement | null;
+
+  const hypConfidenceValue = document.getElementById("hypConfidenceValue");
+
+  if (hypConfidence && hypConfidenceValue) {
+    hypConfidence.addEventListener("input", (event) => {
+      const target = event.currentTarget;
+
+      if (!(target instanceof HTMLInputElement)) {
+        return;
+      }
+
+      hypConfidenceValue.textContent = target.value;
     });
+  }
 }
 
 // ---------------------------------------------------------------------
 // INIT
 // ---------------------------------------------------------------------
 
-function initApp() {
+function initApp(): void {
   loadBookmarksFromStorage();
   loadNotesFromStorage();
   setupEventListeners();
 
-  loadAllData().then(function () {
+  loadAllData().then(() => {
     handleHashChange();
-    const firstNote = loadNoteAsync("E01");
-    console.log("First note preview:", firstNote);
+
+    loadNoteAsync("E01").then((firstNote) => {
+      console.log("First note preview:", firstNote);
+    });
   });
 }
 
