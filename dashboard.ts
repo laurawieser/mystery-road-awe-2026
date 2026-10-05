@@ -11,7 +11,10 @@ import { formatDate, getStatusBadgeClass } from "./utils.js";
 
 export function renderDashboard(): void {
   const container = document.getElementById("dashboardContent");
-  if (!container) return;
+
+  if (!container) {
+    return;
+  }
 
   let reviewedCount = 0;
 
@@ -29,28 +32,43 @@ export function renderDashboard(): void {
   let html = "";
 
   html += '<div class="case-summary-card">';
+
   html += "<h3>" + (caseData?.title || "Case") + " – Live Deployment Test</h3>";
+
+  html +=
     '<p><span class="badge badge-flagged">' +
     (caseData?.status || "unknown").toUpperCase() +
     "</span></p>";
+
   html += "<p>" + (caseData?.summary || "") + "</p>";
+
   html += "</div>";
 
   html += '<div class="stat-grid">';
+
   html += statCardHTML(allEvidence.length, "Evidence items");
+
   html += statCardHTML(allPeople.length, "People");
+
   html += statCardHTML(allLocations.length, "Locations");
+
   html += statCardHTML(bookmarks.length, "Bookmarked");
+
   html += statCardHTML(reviewedCount, "Reviewed");
+
   html += "</div>";
 
   html += '<div class="dashboard-panel">';
+
   html += "<h3>Review progress</h3>";
+
   html +=
     '<div class="progress-bar-outer"><div class="progress-bar-inner" style="width:' +
     progressPct +
     '%;"></div></div>';
+
   html += "<p>" + progressPct + "% of evidence reviewed</p>";
+
   html += "</div>";
 
   html += '<div class="dashboard-columns">';
