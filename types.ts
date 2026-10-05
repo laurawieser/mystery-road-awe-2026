@@ -2,6 +2,15 @@ export type PersonId = string;
 export type LocationId = string;
 export type EvidenceId = string;
 export type TimelineEventId = string;
+export type EvidenceStatus =
+  | "unreviewed"
+  | "reviewed"
+  | "flagged";
+
+export type EvidenceRelevance =
+  | "unknown"
+  | "relevant"
+  | "irrelevant";
 
 export interface CaseFile {
   caseId: string;
@@ -43,8 +52,8 @@ export interface Evidence {
   personIds: PersonId[];
   locationIds: LocationId[];
   tags: string[];
-  status: string;
-  relevance: string;
+  status: EvidenceStatus;
+  relevance: EvidenceRelevance;
 }
 
 export type TimelineCertainty =

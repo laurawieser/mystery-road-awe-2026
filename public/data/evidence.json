@@ -152,8 +152,8 @@
     "personIds": ["signal-scholar"],
     "locationIds": ["L04"],
     "tags": ["release", "deployment", "critical"],
-    "status": "Reviewed",
-    "relevance": "Unknown"
+    "status": "reviewed",
+    "relevance": "unknown"
   },
   {
     "id": "E13",
