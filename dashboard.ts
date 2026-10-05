@@ -29,8 +29,7 @@ export function renderDashboard(): void {
   let html = "";
 
   html += '<div class="case-summary-card">';
-  html += "<h3>" + (caseData?.title || "Case") + "</h3>";
-  html +=
+  html += "<h3>" + (caseData?.title || "Case") + " – Live Deployment Test</h3>";
     '<p><span class="badge badge-flagged">' +
     (caseData?.status || "unknown").toUpperCase() +
     "</span></p>";
