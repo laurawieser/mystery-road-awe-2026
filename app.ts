@@ -322,3 +322,4 @@ function initApp(): void {
 
 window.addEventListener("DOMContentLoaded", initApp);
 window.addEventListener("hashchange", handleHashChange);
+const formatTest={foo:"bar",baz:[1,2,3]}
