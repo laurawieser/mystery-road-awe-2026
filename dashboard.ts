@@ -132,4 +132,3 @@ function statCardHTML(value: number, label: string): string {
     "</div></div>"
   );
 }
-const deploymentBlockTest: number = "this should fail";

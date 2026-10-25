@@ -396,6 +396,8 @@
       </section>
     </main>
 
+    <div id="react-root"></div>
+
     <footer class="app-footer">
       <p>
         Project ReMotion Investigation Portal &mdash; Research Center AI,
@@ -404,6 +406,9 @@
     </footer>
 
     <script type="module" src="app.js"></script>
-    //loading JavaScript module instead of JS file
+    <!-- Loads the existing vanilla TypeScript/JavaScript application -->
+    <script type="module" src="/main-react.tsx"></script>
+    <!-- Loads the new React entry point during the migration -->  
+    
   </body>
 </html>
