@@ -63,10 +63,16 @@ export default function App() {
       />
 
       <main>
-        {currentView === "dashboard" && <DashboardPage />}
+        {currentView === "dashboard" && (
+          <DashboardPage onNavigate={navigateTo} />
+        )}
+
         {currentView === "evidence" && <EvidencePage />}
+
         {currentView === "people" && <PeoplePage />}
+
         {currentView === "timeline" && <TimelinePage />}
+
         {currentView === "workspace" && <WorkspacePage />}
       </main>
     </div>
