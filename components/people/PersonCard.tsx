@@ -1,5 +1,3 @@
-import { useState } from "react";
-
 type PersonCardProps = {
   name: string;
   role: string;
@@ -19,8 +17,6 @@ export default function PersonCard({
   statement,
   evidenceCount,
 }: PersonCardProps) {
-  const [note, setNote] = useState("");
-
   return (
     <div className="person-card">
       <div className="person-card-header">
@@ -57,11 +53,7 @@ export default function PersonCard({
         {evidenceCount === 1 ? "" : "s"}
       </p>
 
-    <input
-    value={note}
-    onChange={(event) => setNote(event.target.value)}
-    placeholder={`Note for ${name}`}
-    />
+
     </div>
   );
 }

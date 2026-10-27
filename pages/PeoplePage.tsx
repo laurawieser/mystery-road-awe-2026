@@ -58,9 +58,9 @@ export default function PeoplePage() {
       <h2>People & Locations</h2>
 
       <Panel title="People">
-        {people.reverse().map((person, index) => (
+        {people.map((person) => (
           <PersonCard
-            key={index}
+            key={person.id}
             name={person.name}
             role={person.role}
             avatar={person.avatar}
