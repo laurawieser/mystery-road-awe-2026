@@ -1,5 +1,5 @@
-import PersonCard from "../components/people/PersonCard";
-import LocationCard from "../components/people/LocationCard";
+import PeopleList from "../components/people/PeopleList";
+import LocationsList from "../components/people/LocationsList";
 import Panel from "../components/UI/Panel";
 
 const people = [
@@ -58,30 +58,11 @@ export default function PeoplePage() {
       <h2>People & Locations</h2>
 
       <Panel title="People">
-        {people.map((person) => (
-          <PersonCard
-            key={person.id}
-            name={person.name}
-            role={person.role}
-            avatar={person.avatar}
-            speciality={person.speciality}
-            responsibilities={person.responsibilities}
-            statement={person.statement}
-            evidenceCount={person.evidenceCount}
-          />
-        ))}
+        <PeopleList people={people} />
       </Panel>
 
       <Panel title="Locations">
-        {locations.map((location) => (
-          <LocationCard
-            key={location.id}
-            id={location.id}
-            name={location.name}
-            description={location.description}
-            contains={location.contains}
-          />
-        ))}
+        <LocationsList locations={locations} />
       </Panel>
     </div>
   );
