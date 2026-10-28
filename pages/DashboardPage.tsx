@@ -1,3 +1,4 @@
+
 import { useEffect, useState } from "react";
 
 import IntroCard from "../components/dashboard/IntroCard";
@@ -6,6 +7,7 @@ import StatCard from "../components/dashboard/StatCard";
 import ReviewProgress from "../components/dashboard/ReviewProgress";
 import RecentEvidenceList from "../components/dashboard/RecentEvidenceList";
 import RecentTimelineList from "../components/dashboard/RecentTimelineList";
+import Panel from "../components/UI/Panel";
 
 type ViewName =
   | "dashboard"
@@ -185,13 +187,13 @@ export default function DashboardPage({
       />
 
       <div className="dashboard-columns">
-        <RecentEvidenceList
-          evidence={evidence}
-        />
+        <Panel title="Recent Evidence">
+          <RecentEvidenceList evidence={evidence} />
+        </Panel>
 
-        <RecentTimelineList
-          timeline={timeline}
-        />
+        <Panel title="Recent Timeline Events">
+          <RecentTimelineList timeline={timeline} />
+        </Panel>
       </div>
     </div>
   );

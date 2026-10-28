@@ -4,8 +4,8 @@ import EvidencePage from "./pages/EvidencePage";
 import PeoplePage from "./pages/PeoplePage";
 import TimelinePage from "./pages/TimelinePage";
 import WorkspacePage from "./pages/WorkspacePage";
-import Header from "./components/Header";
-import Navigation from "./components/Navigation";
+import Header from "./components/layout/Header";
+import Navigation from "./components/layout/Navigation";
 
 type ViewName =
   | "dashboard"

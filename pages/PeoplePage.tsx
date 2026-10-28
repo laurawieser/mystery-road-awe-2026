@@ -1,5 +1,5 @@
-import PeopleList from "../components/people/PeopleList";
-import LocationsList from "../components/people/LocationsList";
+import PeopleList from "../components/people-locations/PeopleList";
+import LocationsList from "../components/people-locations/LocationsList";
 import Panel from "../components/UI/Panel";
 
 const people = [

@@ -5,12 +5,9 @@ type PanelProps = {
   children: ReactNode;
 };
 
-export default function Panel({
-  title,
-  children,
-}: PanelProps) {
+export default function Panel({ title, children }: PanelProps) {
   return (
-    <section className="dashboard-panel">
+    <section className="panel">
       <h3>{title}</h3>
       {children}
     </section>
